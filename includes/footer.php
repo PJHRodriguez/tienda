@@ -1,4 +1,9 @@
 </body>
+
+ <!--
+        DATOS PERSONALES
+        
+    -->
 <footer>
     <div class=" bg-stone-900 mx-auto text-white text-center">
 
@@ -7,10 +12,10 @@
       </p>
 
       <div class="mt-4">
-        <a href="https://github.com/tuusuario" target="_blank" class="text-white hover:text-white mx-2">
+        <a href="https://github.com/PJHRodriguez" target="_blank" class="text-white hover:text-white mx-2">
           <i class="fab fa-github"></i>
         </a>
-        <a href="https://www.linkedin.com/in/tuusuario" target="_blank" class="text-white hover:text-white mx-2">
+        <a href="https://www.linkedin.com/in/pablo-hernandez-a42121347" target="_blank" class="text-white hover:text-white mx-2">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </div>

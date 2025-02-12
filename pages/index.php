@@ -1,6 +1,8 @@
 <?php include('../includes/header.php')?>
 
-
+ <!--
+        LANDING PAGE
+    -->
 <div class="container flex flex-wrap justify-between m-auto my-12 rounded-lg">
 
 

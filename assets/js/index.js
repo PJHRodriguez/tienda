@@ -1,10 +1,14 @@
+// === MENU MOVIL BOTON===
 document.querySelector("#mtoggle").addEventListener("click", () => {
   document.querySelector("#menu-mobile").classList.toggle("hidden");
 });
 
+// === MODALES PARA REGISTRARSE Y LOGUEARSE ===
 const userIcon = document.getElementById("userIcon");
 const loginModal = document.getElementById("loginModal");
 const closeModal = document.getElementById("closeModal");
+const registerModal = document.getElementById("registerModal");
+const closeModal2 = document.getElementById("closeModal2");
 
 userIcon.addEventListener("click", function (event) {
   event.preventDefault();
@@ -41,30 +45,63 @@ document.querySelector("#loginLink").addEventListener("click", () => {
   loginModal.classList.remove("hidden");
 });
 
-document
-  .getElementById("registerForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita que el formulario recargue la página
+// === PETICION PARA LOGUEARSE===
+let login = document.querySelector("#loginForm");
+login.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    const formData = new FormData(this); // Recoge los datos del formulario
+  let divErrores = document.querySelector("#loginErrors");
+  divErrores.innerHTML = "";
+  let datos = new FormData(login);
 
-    // Usamos fetch para enviar los datos al servidor sin hacer nada con la respuesta
-    fetch("../actions/register.php", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        // Si la respuesta fue exitosa, no hacemos nada
-        if (response.ok) {
-          // Si deseas mostrar un mensaje de éxito, puedes hacerlo aquí,
-          // pero si no quieres hacerlo, simplemente no haces nada.
-        } else {
-          // Si hay un error con la respuesta, lo puedes manejar aquí.
-          console.error("Hubo un error en el registro");
-        }
-      })
-      .catch((error) => {
-        // Captura errores si los hay en la petición fetch
-        console.error("Error al enviar formulario:", error);
-      });
-  });
+  fetch("../actions/login.php", {
+    method: "POST",
+    body: datos,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data.errors) {
+        Object.keys(data.errors).forEach((key) => {
+          const errorDiv = document.createElement("div");
+          errorDiv.classList.add("text-1xl", "text-red-500", "mb-2");
+          errorDiv.textContent = data.errors[key];
+          divErrores.appendChild(errorDiv);
+        });
+      }
+      if (data.success) {
+        window.location.href = data.redirect;
+      }
+    });
+});
+
+// === PETICION  PARA REGISTRARSE===
+let registro = document.querySelector("#registerForm");
+registro.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  let divErrores = document.querySelector("#errorContainer");
+  divErrores.innerHTML = "";
+  let datos = new FormData(registro);
+
+  fetch("../actions/register.php", {
+    method: "POST",
+    body: datos,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data.errors) {
+        Object.keys(data.errors).forEach((key) => {
+          const errorDiv = document.createElement("div");
+          errorDiv.classList.add("text-1xl", "text-red-500", "mb-2");
+          errorDiv.textContent = data.errors[key];
+          divErrores.appendChild(errorDiv);
+        });
+      }
+      if (data.success) {
+        registerModal.classList.add("hidden");
+        loginModal.classList.remove("hidden");
+      }
+    });
+});
